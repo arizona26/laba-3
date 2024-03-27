@@ -12,35 +12,34 @@ namespace laba_2
     public class Sentence
     {
         public string LineText { get; set; }
-        public void AddWord(string Word)// додати слово
+        public void AddWord(string Word)
         {
             LineText += Word;
         }
-        public void RemoveWord(string Word)//видалити слово
+        public void RemoveWord(string Word)
         {
             LineText = LineText.Replace(Word, " ");
         }
-        public void InsertWord(int position, string word)//вставити слово
+        public void InsertWord(int position, string word)
         {
             var words = LineText.Split(' ');
             var list = new List<string>(words);
             list.Insert(position, word);
             LineText = string.Join(" ", list);
         }
-        public int CountLetters() //кількість літер
+        public int CountLetters() 
         {
             return LineText.Length;
         }
-        private string[] SplitLineText()//розділ по рядкам
+        private string[] SplitLineText()
 
         {
             return LineText.Split(' ');
         }
-        public int CountWord()//кількість слів
+        public int CountWord()
         {
             return SplitLineText().Length;
         }
-        // Метод для знаходження найдовшого слова у реченні
         public string LongestWord()
         {
             var words = LineText.Split(' ');
@@ -52,7 +51,7 @@ namespace laba_2
             }
             return longest;
         }
-        public string ShortestWord()// Метод для знаходження найкоротшого слова у реченні
+        public string ShortestWord()
         {
             var words = LineText.Split(' ');
             string shortest = string.Empty;
@@ -65,11 +64,11 @@ namespace laba_2
             }
             return shortest;
         }
-        public bool CheckWord(string Word)//чи є в реченні задане слово
+        public bool CheckWord(string Word)
         {
             return LineText.Contains(Word);
         }
-        public string WordAtPosition(int position) // Метод для отримання слова за певною позицією у реченні
+        public string WordAtPosition(int position)
         {
             var words = LineText.Split(' ');
             if (position >= 0 && position < words.Length)
@@ -77,7 +76,7 @@ namespace laba_2
             else
                 return null;
         }
-        public bool CheckLineText(Sentence sentence) // Метод для порівняння двох речень
+        public bool CheckLineText(Sentence sentence) 
         {
             if (LineText == sentence.LineText)
             {
@@ -89,21 +88,15 @@ namespace laba_2
         {
             return JsonConvert.SerializeObject(this);
         }
-
-        // Статичний метод для десеріалізації JSON строки у об'єкт Sentence
         public static Sentence DeserializeFromJson(string json)
         {
             return JsonConvert.DeserializeObject<Sentence>(json);
         }
-
-        // Метод для збереження об'єкта у JSON файл
         public void SaveToJsonFile(string filename)
         {
             string jsonData = SerializeToJson();
             File.WriteAllText(filename, jsonData);
         }
-
-        // Статичний метод для завантаження об'єкта з JSON файлу
         public static Sentence LoadFromJsonFile(string filename)
         {
             string jsonData = File.ReadAllText(filename);
